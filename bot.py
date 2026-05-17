@@ -142,7 +142,7 @@ def run_bot():
         all_links = list(set(video_links + scraped_links))
         
         random.shuffle(all_links) 
-        final_list = all_links[:150] 
+        final_list = all_links[:110] 
         
         print_log(f">>> TOTAL DITEMUKAN: {len(all_links)} video.")
         print_log(f">>> BOT AKAN MEMUTAR: {len(final_list)} video acak.")
