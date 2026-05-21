@@ -4,9 +4,6 @@ jobs:
   build:
     docker:
       - image: cimg/python:3.10-browsers
-    parameters:
-      instance:
-        type: string
     steps:
       - checkout
       - run:
@@ -21,19 +18,27 @@ jobs:
           name: Install Dependencies
           command: pip install selenium
       - run:
-          name: Run Bot (Instance << parameters.instance >>)
+          name: Run Bot
           command: |
             chmod +x start.sh
             ./start.sh
+      
+      # 🔄 RE-RUN JALUR TUNGGAL AUTOMATIS
+      - run:
+          name: Auto Trigger New Workflow (On Success or Failure)
+          when: always
+          command: |
+            echo "🤖 Prosedur selesai/gagal. Memicu putaran berikutnya..."
+            
+            # Menggunakan token yang kamu berikan secara langsung agar pasti tembus API
+            curl -X POST "https://circleci.com/api/v2/project/gh/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/pipeline" \
+              -H "Circle-Token: CCIPAT_4xUgAQc4VqWVfQ7QPwSCHs_c0bf752cc6709844b4c1530da91c7e07b1546ccf" \
+              -H "Content-Type: application/json" \
+              -d "{\"branch\": \"${CIRCLE_BRANCH}\"}"
+              
+            echo "✅ Putaran estafet berikutnya berhasil masuk antrean."
 
 workflows:
   main_workflow:
     jobs:
-      - build:
-          matrix:
-            parameters:
-              instance: [
-                "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-                "11", "12", "13", "14", "15", "16", "17", "18", "19", "20",
-                "21", "22", "23", "24", "25", "26", "27", "28", "29", "30"
-              ]
+      - build
