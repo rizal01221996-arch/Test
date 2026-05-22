@@ -11,7 +11,11 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install -y tor privoxy
+            # Memastikan Privoxy mendengarkan port 8118 yang dipakai Selenium
+            echo "listen-address 127.0.0.1:8118" | sudo tee -a /etc/privoxy/config
+            # Menyambungkan Privoxy ke SOCKS5 Tor (Port 9050)
             echo "forward-socks5t / 127.0.0.1:9050 ." | sudo tee -a /etc/privoxy/config
+            # Menjalankan layanan
             sudo service tor start
             sudo service privoxy start
       - run:
