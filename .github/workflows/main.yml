@@ -1,4 +1,4 @@
-name: Manual Mode
+name: rizal
 
 on:
   workflow_dispatch: # Hanya bisa dijalankan secara manual
