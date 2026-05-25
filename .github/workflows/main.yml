@@ -1,4 +1,4 @@
-￼Enter name: Manual Mode
+name: test
 
 on:
   workflow_dispatch:
