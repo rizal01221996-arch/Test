@@ -1,4 +1,4 @@
-Enter name: rizal
+name: rizal
 
 on:
   workflow_dispatch: # Hanya bisa dijalankan secara manual
